@@ -1,8 +1,71 @@
-[gd_scene load_steps=7 format=4 uid="uid://cecxj8pgwul0s"]
+[gd_scene load_steps=11 format=4 uid="uid://cecxj8pgwul0s"]
 
 [ext_resource type="PackedScene" uid="uid://bfkbig8xa5pcm" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Texture2D" uid="uid://chm2kes86sx" path="res://craftpix-net-156752-nature-pixel-art-environment-free-assets-pack/Nature_environment_01.png" id="2_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://dxr6qmiklj62d" path="res://craftpix-net-156752-nature-pixel-art-environment-free-assets-pack/Nature_props_01.png" id="3_sugp2"]
+[ext_resource type="PackedScene" uid="uid://ds1uyalj2dkne" path="res://scenes/enemy_orc.tscn" id="4_jyhfs"]
+
+[sub_resource type="Animation" id="Animation_jyhfs"]
+resource_name = "orc-walk"
+length = 5.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(239, 24), Vector2(373, 24), Vector2(240, 23)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Vector2(1, 1), Vector2(-1, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_tbgi4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(239, 24)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tbgi4"]
+_data = {
+&"RESET": SubResource("Animation_tbgi4"),
+&"orc-walk": SubResource("Animation_jyhfs")
+}
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sugp2"]
 texture = ExtResource("2_0wfyh")
@@ -1634,6 +1697,15 @@ sources/1 = SubResource("TileSetAtlasSource_jyhfs")
 [node name="Player" parent="." instance=ExtResource("1_o5qli")]
 light_mask = 2
 visibility_layer = 2
+
+[node name="EnemyOrc" parent="." instance=ExtResource("4_jyhfs")]
+position = Vector2(239, 24)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="EnemyOrc"]
+libraries = {
+&"": SubResource("AnimationLibrary_tbgi4")
+}
+autoplay = "orc-walk"
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(1, 0)
